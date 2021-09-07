@@ -15,7 +15,15 @@
     background-color: #337AFF;
     box-shadow: 0 14rpx 28rpx rgba(51,122,255,.3);
 }
-
+.text{
+    display: inline-block;
+    width: 100%;
+    text-align: center;
+    margin-top: 40rpx;
+    margin-bottom: 40rpx;
+    font-size: 24rpx;
+    color:rgb(14, 184, 226);
+}
 .go-back {
     color: #000;
     background-color: #F8F8F8;

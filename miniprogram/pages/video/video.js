@@ -11,6 +11,10 @@ Page({
             dataUrl: app.globalData.videoSrc
         })
     },
+    setClipboard(){
+        console.log(1313)
+        wx.setClipboardData({  data: app.globalData.videoSrc})
+    },
     getdataUrl: function (o) {
         return wx.getStorageSync(o)
     },

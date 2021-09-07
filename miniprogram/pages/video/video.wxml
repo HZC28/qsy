@@ -3,5 +3,6 @@
     <video controls class="video-box" src="{{dataUrl}}" wx:if="{{dataUrl!=''}}"></video>
     <button bindgetuserinfo="postSave" class="parsing" openType="getUserInfo">保存到相册</button>
     <button bindtap="goBack" class="parsing go-back">返回首页</button>
+    <text bindtap="setClipboard" class="text">若视频过长小程序无法下载，请点击复制链接到浏览器下载</text>
     <ad unitId="adunit-da32b7d1121377b2"></ad>
 </view>

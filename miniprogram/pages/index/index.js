@@ -133,12 +133,12 @@ Page({
       success(res){
         console.log(res)
         let result=res.result.body
-        let url=result.data.video_url
         if(result.code!=200 || url==''){
           wx.hideLoading()
-          a.showToast('解析失败')
+          a.showToast('解析失败,'+result.msg)
           return
         }
+        let url=result.data.video_url
         wx.cloud.callFunction({
           name:'test',
           data:{
@@ -156,78 +156,15 @@ Page({
           },
           fail(){
              wx.hideLoading()
-              wx.setStorageSync('dataUrl', url), app.globalData.videoSrc = url
-            wx.navigateTo({
-              url: '../../pages/video/video'
-            })
+              wx.setStorageSync('dataUrl', url)
+              app.globalData.videoSrc = url
+              wx.navigateTo({
+                url: '../../pages/video/video'
+              })
           }
         })
       }
     })
-    // wx.cloud.callFunction({
-    //   name:'test',
-    //   data:{
-    //     url:"getUrl",
-    //     link:urlstr
-    //   },
-    //   success:function(res){
-    //     wx.hideLoading()
-    //     // console.log(res,"success")
-    //     // wx.hideLoading(), t.data.msg ? (a.showToast('解析成功', 'success'), wx.setStorageSync('dataUrl', t.data.msg.video), app.globalData.videoSrc = t.data.message,
-    //     //   wx.navigateTo({
-    //     //     url: '../../pages/video/video'
-    //     //   })) : a.showToast('解析失败')
-    //     // https://www.douyin.com/video/7003878207380360456?previous_page=app_code_link
-    //     // str.replace(/[^0-9]/ig,"")
-    //     console.log(res.result.replace(/[^0-9]/ig,""))
-    //     wx.request({
-    //       url: 'https://www.iesdouyin.com/web/api/v2/aweme/iteminfo',
-    //       data:{
-    //         item_ids:res.result.replace(/[^0-9]/ig,"")
-    //       },
-    //       success(res){
-    //         let url=res.data.item_list[0].video.play_addr.url_list[0]
-    //         let loadUrl=url.replace(/playwm/, "play")
-    //         // console.log( url.replace(/playwm/, "play"))
-    //         wx.cloud.callFunction({
-    //           name:'test',
-    //           data:{
-    //             url:"getVideo",
-    //             videoUrl:loadUrl
-    //           },
-    //           success(res){
-    //             let reg = /^(https?:\/\/)([0-9a-z.]+)(:[0-9]+)?([/0-9a-z.]+)?(\?[0-9a-z&=]+)?(#[0-9-a-z]+)?/i
-    //             let path =  res.result.replace(reg, "https://$2$3$4$5$6");
-    //             console.log(path)
-    //             wx.cloud.callFunction({
-    //               name:'test',
-    //               data:{
-    //                 url:"uploadFile",
-    //                 link:path
-    //               },
-    //               success(res){
-    //                 console.log(res.result)
-    //                 wx.setStorageSync('fileID', res.result.fileID)
-    //                 wx.setStorageSync('dataUrl', loadUrl), app.globalData.videoSrc = path
-    //                 wx.navigateTo({
-    //                   url: '../../pages/video/video'
-    //                 })
-    //               }
-    //             })
-                
-    //           },
-    //           fail(err){
-    //             console.log(err,"231")
-    //           }
-    //         })
-            
-    //       }
-    //     })
-    //   },
-    //   fail:function(e){
-    //     wx.hideLoading(), a.showToast('解析失败')
-    //   }
-    // })
   },
   showToast: function(o) {
     var t = arguments.length > 1 && void 0 !== arguments[1] ? arguments[1] : "none", n = arguments.length > 2 && void 0 !== arguments[2] ? arguments[2] : 1500
