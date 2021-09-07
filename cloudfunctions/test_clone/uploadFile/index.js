@@ -25,12 +25,20 @@ exports.main = async (event, context) => {
         resolve(body)
       }else{
           //转储
-        resolve(
           cloud.uploadFile({
             cloudPath: 'tmp/'+filename,
             fileContent: body,
+          }).then(res=>{
+            db.collection('vedioid_table').add({
+              data:{
+                fileID:res.fileID,
+                time:new Date().getTime()
+              }
+            })
+            resolve(res)
+            console.log(res)
           })
-        )
+        
       }
     })
   })
