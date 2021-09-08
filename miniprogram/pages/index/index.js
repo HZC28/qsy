@@ -53,6 +53,25 @@ Page({
       }
     } })
   },
+  onShareAppMessage: function(res) {
+    let that = this;
+    // console.log('主图------------->',that.data.goodsObj.MainImages)
+    return {
+      title: "短视频去水印永久免费",
+      path: '/pages/index/index',
+      success: function(res) {
+        console.log(res, "转发成功")
+      },
+      fail: function(res) {
+        console.log(res, "转发失败")
+      }
+    }
+  },
+  onShareTimeline(){
+    return {
+      title: '短视频去水印永久免费'
+    }
+  },
   mousuosuo_showSvPro(e) {
     var index = e.target.dataset.index
     var t = this
