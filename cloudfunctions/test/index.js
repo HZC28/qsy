@@ -3,6 +3,7 @@ const getOpenId=require('./getOpenId/index')
 const getUrl=require('./getUrl/index')
 const getVideo=require('./getVideo/index')
 const uploadFile=require('./uploadFile/index')
+const downloadTime=require('./downloadTime/index')
 const api=require("./api/index")
 // 云函数入口函数
 exports.main = async (event, context) => {
@@ -19,5 +20,7 @@ exports.main = async (event, context) => {
       return await uploadFile.main(event, context)
     case 'api':
       return await api.main(event, context)
+    case 'downloadTime':
+      return await downloadTime.main(event, context)
   }
 }

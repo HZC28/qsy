@@ -3,7 +3,9 @@ var app = getApp(), n = ''
 Page({
     data: {
         videoSrc: '',
-        dataUrl: ''
+        dataUrl: '',
+        savabtn:true,
+        saveSucess:false
     },
     onLoad: function () {
         console.log(app.globalData.videoSrc)
@@ -31,6 +33,16 @@ Page({
         })
     },
     download: function () {
+        if(this.data.saveSucess==true){
+            this.showToast('视频已保存，无需重复保存')
+            return
+        }
+        if(this.data.savabtn==false){
+            return
+        }
+        this.setData({
+            savabtn: false
+        })
         var t = this, e = t.data.dataUrl // o.default + '/downVideo.php?url=' + this.data.dataUrl
         wx.showLoading({
             title: '保存中 0%'
@@ -41,18 +53,30 @@ Page({
                     filePath: o.tempFilePath,
                     success: function (o) {
                         t.showToast('保存成功', 'success'), setTimeout(function () {
-                            wx.setClipboardData({
-                              data: '',
+                            t.setData({
+                                savabtn: true,
+                                saveSucess:true
                             })
-                            t.goBack()
+                            wx.cloud.callFunction({
+                                name:'test',
+                                data:{
+                                  url:"downloadTime"
+                                }
+                            })
                         }, 1e3)
                     },
                     fail: function (o) {
                         t.showToast('保存失败')
+                        t.setData({
+                            savabtn: true
+                        })
                     }
                 })
             },
             fail: function (o) {
+                this.setData({
+                    savabtn: true
+                })
                 n = null, wx.hideLoading(), t.showToast('下载失败')
             }
         })).onProgressUpdate(function (o) {
