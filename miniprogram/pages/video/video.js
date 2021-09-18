@@ -32,7 +32,7 @@ Page({
             delta: 1
         })
     },
-    download: function () {
+    download:async function () {
         if(this.data.saveSucess==true){
             this.showToast('视频已保存，无需重复保存')
             return
@@ -43,7 +43,21 @@ Page({
         this.setData({
             savabtn: false
         })
+       
         var t = this, e = t.data.dataUrl // o.default + '/downVideo.php?url=' + this.data.dataUrl
+        let result1=await wx.cloud.callFunction({
+            name:'test',
+            data:{
+              url:"getTime"
+            }
+        })
+        if(result1.result.data[0].download_time>=3){
+            this.showToast('当日下载次数已用完，请点击复制链接到浏览器下载或者第二天下载')
+            this.setData({
+                savabtn: true
+            })
+            return
+        }
         wx.showLoading({
             title: '保存中 0%'
         }), (n = wx.cloud.downloadFile({

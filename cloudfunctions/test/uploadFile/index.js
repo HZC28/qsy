@@ -47,6 +47,7 @@ exports.main = async (event, context) => {
                     data:{
                       openid:openid,
                       download_time:0,
+                      download_time_today:0,
                       request_time:1
                     }
                   })

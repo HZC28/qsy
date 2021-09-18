@@ -5,6 +5,7 @@ const getVideo=require('./getVideo/index')
 const uploadFile=require('./uploadFile/index')
 const downloadTime=require('./downloadTime/index')
 const api=require("./api/index")
+const getTime=require('./getTime/index')
 // 云函数入口函数
 exports.main = async (event, context) => {
   switch (event.url) {
@@ -22,5 +23,7 @@ exports.main = async (event, context) => {
       return await api.main(event, context)
     case 'downloadTime':
       return await downloadTime.main(event, context)
+    case 'getTime':
+      return await getTime.main(event, context)
   }
 }

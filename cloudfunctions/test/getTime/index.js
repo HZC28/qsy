@@ -1,5 +1,5 @@
 const cloud = require('wx-server-sdk')
-
+const request = require('request-promise');
 cloud.init({
   env: cloud.DYNAMIC_CURRENT_ENV
 })
@@ -8,14 +8,10 @@ const db = cloud.database()
 exports.main = async (event, context) => {
   // 获取基础信息
   const wxContext = cloud.getWXContext()
-  const _ = db.command
-  let obj=[]
-  let openid=wxContext.OPENID
-  obj = await db.collection("downloads_table").where({openid:openid}).update({
-    data:{
-      download_time:_.inc(1),
-      download_time_today:_.inc(1)
-    }
-  })
-  return obj.data
+  let url;
+  let l=db.collection('downloads_table').where({
+    openid: wxContext.OPENID
+  }).get()
+  return l
+  
 }
